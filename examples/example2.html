@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <script src="phaser.min.js"></script>
+        <script src="../uriplugin.js"></script>
+        
+    </head>
+        
+    <body>
+        <script>
+        
+        let s = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
+        class Boot extends Phaser.Scene {
+            constructor() {
+                super("boot");
+            }
+            preload() {
+                console.log("preload is called");
+                this.load.datauri("dot",s);
+                console.log("preload is done");
+            }
+            create() {
+                console.log("create is called");
+                this.add.image(0,0,"dot");
+            }
+        }
+        
+        function mainline() {
+            let opts = {
+                width : 300,
+                height : 300,
+                scene: [Boot],
+                plugins: {
+                    global: [{
+                        key : "URIdataLoaderPlugin",
+                        plugin : URIdataLoaderPlugin,
+                        start: true
+                    }]
+                }
+            };
+            game = new Phaser.Game(opts);
+        }
+        window.onload = mainline;
+        </script>
+    </body>
+</html>
